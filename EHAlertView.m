@@ -15,6 +15,25 @@
 
 @implementation EHAlertView
 
+- (void)dealloc
+{
+#if NS_BLOCKS_AVAILABLE
+	if (willDismissButtonBlock != nil)
+	{
+		[willDismissButtonBlock release];
+	}
+	if (clickedButtonBlock != nil)
+	{
+		[clickedButtonBlock release];
+	}
+	if (didDismissButtonBlock != nil)
+	{
+		[didDismissButtonBlock release];
+	}
+#endif
+	[super dealloc];
+}
+
 - (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
 {
 	if ((self = [super initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil]))
@@ -32,21 +51,31 @@
 
 
 #if NS_BLOCKS_AVAILABLE
+
 - (void)setWillDismissButtonBlock:(EHAlertButtonBlock)block
 {
-	[willDismissButtonBlock release];
+	if (willDismissButtonBlock != nil)
+	{
+		[willDismissButtonBlock release];
+	}
 	willDismissButtonBlock = [block copy];
 }
 
 - (void)setClickedButtonBlock:(EHAlertButtonBlock)block
 {
-	[clickedButtonBlock release];
+	if (clickedButtonBlock != nil)
+	{
+		[clickedButtonBlock release];
+	}
 	clickedButtonBlock = [block copy];	
 }
 
 - (void)setDidDismissButtonBlock:(EHAlertButtonBlock)block
 {
-	[didDismissButtonBlock release];
+	if (didDismissButtonBlock != nil)
+	{
+		[didDismissButtonBlock release];
+	}
 	didDismissButtonBlock = [block copy];
 }
 
@@ -75,6 +104,7 @@
 		didDismissButtonBlock(buttonIndex);
 	}
 }
+
 #endif
 
 @end
