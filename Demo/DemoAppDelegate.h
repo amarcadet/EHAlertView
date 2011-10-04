@@ -12,8 +12,7 @@
 
 @interface DemoAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) DemoViewController *viewController;
+@property (nonatomic, assign) IBOutlet UIWindow *window;
+@property (nonatomic, assign) IBOutlet DemoViewController *viewController;
 
 @end
